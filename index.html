@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RACA – Road Condition Alert App</title>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Leaflet Map Library -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+      crossorigin=""
+    />
+    <script
+      src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+      crossorigin=""
+      defer
+    ></script>
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <div id="splash" class="splash">
+      <div class="splash-inner">
+        <div class="splash-logo-row">
+          <div class="splash-dot"></div>
+          <span class="splash-abbr">RACA</span>
+        </div>
+        <p class="splash-title">Road Condition Alert</p>
+        <p class="splash-subtitle">Naga City · Camarines Sur</p>
+        <p class="splash-caption">Helping drivers see potholes, flooding, and barriers before they hit.</p>
+      </div>
+    </div>
+
+    <div class="app">
+      <header class="app-header">
+        <div class="app-title">
+          <span class="dot"></span>
+          <div>
+            <h1>RACA</h1>
+            <p class="subtitle">Road Anomaly &amp; Collision Avoidance</p>
+          </div>
+        </div>
+        <div class="status-pill" id="gps-status">Searching GPS…</div>
+      </header>
+
+      <main class="app-main">
+        <section id="map" class="map"></section>
+
+        <section class="panel">
+          <div class="panel-header">
+            <div>
+              <h2>Nearby Road Hazards</h2>
+              <p class="panel-subtitle">
+                Real‑time potholes, flooding, barriers, and road works in Naga City.
+              </p>
+            </div>
+            <div class="legend">
+              <div class="legend-row">
+                <span class="legend-label">Risk</span>
+                <span class="legend-item">
+                  <span class="dot dot-low"></span>Low
+                </span>
+                <span class="legend-item">
+                  <span class="dot dot-medium"></span>Med
+                </span>
+                <span class="legend-item">
+                  <span class="dot dot-high"></span>High
+                </span>
+              </div>
+              <div class="legend-row legend-row-icons">
+                <span class="legend-label">Type</span>
+                <span class="legend-item legend-item-icon">🕳️ Pothole</span>
+                <span class="legend-item legend-item-icon">🌧️ Flooded</span>
+                <span class="legend-item legend-item-icon">🚧 Barrier/Works</span>
+              </div>
+            </div>
+          </div>
+
+          <div id="active-alert" class="alert-banner hidden">
+            <div class="alert-main">
+              <span class="alert-label">Immediate Hazard</span>
+              <span id="alert-title" class="alert-title"></span>
+            </div>
+            <div class="alert-meta">
+              <span id="alert-distance"></span>
+              <span id="alert-severity" class="severity-pill"></span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-card">
+              <span class="info-label">Current speed (est.)</span>
+              <span id="speed-value" class="info-value">– km/h</span>
+            </div>
+            <div class="info-card">
+              <span class="info-label">Nearest hazard</span>
+              <span id="nearest-distance" class="info-value">–</span>
+            </div>
+          </div>
+
+          <div class="list-header">
+            <span>Hazard list</span>
+            <select id="filter-severity" class="filter-select">
+              <option value="all">All severities</option>
+              <option value="high">High only</option>
+              <option value="medium">Medium &amp; High</option>
+            </select>
+          </div>
+
+          <ul id="hazard-list" class="hazard-list"></ul>
+
+          <footer class="app-footer">
+            <div class="footer-left">
+              <span class="footer-title">Inspector Mode (Demo)</span>
+              <span class="footer-caption">
+                Hazards marked with ✓ are verified by road inspectors.
+              </span>
+            </div>
+            <button id="simulate-move" class="primary-btn">
+              ▶ Simulate Drive
+            </button>
+          </footer>
+        </section>
+      </main>
+
+      <audio id="alert-sound">
+        <source
+          src="data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAIlYAAESsAAACABAAZGF0YQAAAAA="
+          type="audio/wav"
+        />
+      </audio>
+    </div>
+  </body>
+</html>
+
+
